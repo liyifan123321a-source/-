@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#102e31">
+    <title>灵兽迷踪</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="screen home-screen is-active" id="homeScreen">
+        <header class="topbar">
+          <div class="brand">灵兽迷踪</div>
+          <div class="level-readout" aria-label="玩家等级">
+            <strong id="homeLevel">Lv. 1</strong>
+            <div class="xp-track"><i id="homeXpFill"></i></div>
+            <span id="homeXpText">0 / 100 XP</span>
+          </div>
+          <button class="icon-button" id="soundToggle" type="button" aria-label="关闭音效" title="关闭音效">♬</button>
+          <button class="icon-button" id="resetButton" type="button" aria-label="重置本地进度" title="重置本地进度">↻</button>
+        </header>
+
+        <div class="mountain-scene" aria-hidden="true">
+          <div class="moon"></div><div class="peak peak-back"></div><div class="peak peak-front"></div>
+          <div class="gate"><i></i><i></i><b></b></div><div class="river"></div>
+          <span class="scene-beast fox">⌁</span><span class="scene-beast bird">✦</span><span class="scene-beast fish">◌</span>
+        </div>
+
+        <section class="hero-copy">
+          <p class="eyebrow">云隐山门 · 寻踪试炼</p>
+          <h1>寻回散落山河的灵兽</h1>
+          <p>记住它们的踪影，读懂山门机关。</p>
+          <button class="primary-button" id="continueButton" type="button">继续寻踪 <span>→</span></button>
+          <p class="current-stage" id="currentStage">第 1 关 · 初入山门</p>
+        </section>
+
+        <section class="home-grid" aria-label="游戏入口">
+          <button class="home-tile is-selected" id="mainlineButton" type="button">
+            <span class="tile-symbol">◇</span><strong>主线寻踪</strong><small id="mainlineProgress">0 / 5 已通关</small>
+          </button>
+          <button class="home-tile" id="weeklyButton" type="button">
+            <span class="tile-symbol">☽</span><strong>每周挑战</strong><small id="weeklyLabel">本周迷阵</small>
+          </button>
+          <button class="home-tile" type="button" disabled>
+            <span class="tile-symbol">✧</span><strong>灵兽图鉴</strong><small>敬请期待</small>
+          </button>
+        </section>
+        <p class="streak-line" id="streakLine">完成教学关卡，可获得一次经验。</p>
+      </section>
+
+      <section class="screen level-screen" id="levelScreen">
+        <header class="topbar compact-topbar">
+          <button class="back-button" id="levelBackButton" type="button">← 返回</button>
+          <div class="brand">主线寻踪</div>
+          <div class="level-mini" id="levelMini">Lv. 1</div>
+        </header>
+        <div class="page-intro"><p class="eyebrow">教学试炼</p><h2>循着灵息，依序深入山门</h2></div>
+        <div class="level-list" id="levelList"></div>
+      </section>
+
+      <section class="screen play-screen" id="playScreen">
+        <header class="play-topbar">
+          <button class="icon-button" id="playBackButton" type="button" aria-label="返回关卡列表" title="返回关卡列表">←</button>
+          <div class="stage-title"><span id="playChapter">第 1 关</span><strong id="playName">初入山门</strong></div>
+          <div class="play-stats"><div class="moves"><span>剩余步数</span><strong id="movesValue">16</strong></div><div class="mistakes"><span>错误</span><strong id="mistakesValue">0</strong></div><button class="icon-button" id="playSoundToggle" type="button" aria-label="关闭音效" title="关闭音效">♬</button></div>
+        </header>
+        <section class="objective-row"><span id="objectiveText">找出全部 8 对灵兽</span><strong id="pairProgress">0 / 8</strong></section>
+        <div class="mechanism-note" id="mechanismNote">连续翻开两张相同灵兽牌即可消除。</div>
+        <section class="board-wrap"><div class="game-board" id="gameBoard" aria-live="polite"></div></section>
+        <section class="toolbelt" aria-label="可用道具">
+          <button class="tool-button" id="mirrorTool" type="button"><img class="tool-art" src="图片建模/观微镜.png" alt=""><strong>观微镜</strong><small>显露全部</small></button>
+          <button class="tool-button" id="trackerTool" type="button"><span>⌁</span><strong>寻踪香</strong><small>指向同伴</small></button>
+          <button class="tool-button" id="breakerTool" type="button"><span>◇</span><strong>破禁符</strong><small>解除迷雾</small></button>
+        </section>
+      </section>
+    </main>
+
+    <div class="modal-layer" id="tutorialModal" aria-hidden="true">
+      <section class="tutorial-modal" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+        <p class="eyebrow" id="tutorialKicker">试炼规则</p>
+        <div class="tutorial-demo" id="tutorialDemo" aria-hidden="true"></div>
+        <h2 id="tutorialTitle">记住灵兽的踪影</h2>
+        <p id="tutorialDescription"></p>
+        <button class="primary-button tutorial-start" id="tutorialStartButton" type="button">开始试炼 <span>→</span></button>
+      </section>
+    </div>
+
+    <div class="modal-layer" id="resultModal" aria-hidden="true">
+      <section class="result-modal" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <p class="eyebrow" id="resultKicker">寻踪完成</p>
+        <div class="result-emblem">✦</div>
+        <h2 id="resultTitle">灵兽已归位</h2>
+        <p id="resultDescription"></p>
+        <div class="result-stats"><div><span>剩余步数</span><strong id="resultMoves">0</strong></div><div><span>错误翻牌</span><strong id="resultMistakes">0</strong></div><div><span>道具使用</span><strong id="resultTools">0</strong></div><div><span>本关评价</span><strong id="resultStars">★☆☆</strong></div></div>
+        <div class="result-record" id="resultRecord" hidden></div>
+        <div class="xp-gain" id="xpGain">首次通关经验 +0</div>
+        <div class="modal-actions"><button class="secondary-button" id="replayButton" type="button">再来一局</button><button class="secondary-button" id="reviewButton" type="button">复盘本局</button><button class="primary-button" id="nextButton" type="button">下一关 <span>→</span></button></div>
+      </section>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
