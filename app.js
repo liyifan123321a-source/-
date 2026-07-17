@@ -1,24 +1,24 @@
 const STORAGE_KEY = "spiritBeastTrail.v2";
 
 const BEASTS = [
-  { id: "fox", name: "青狐", icon: "🦊", asset: "图片建模/青狐灵兽.png" },
-  { id: "bird", name: "赤鸟", icon: "🕊️", asset: "图片建模/赤鸟灵兽.jpg" },
-  { id: "turtle", name: "玄龟", icon: "🐢", asset: "图片建模/玄龟灵兽.jpg" },
-  { id: "ape", name: "白猿", icon: "🦍", asset: "图片建模/白猿灵兽.jpg" },
-  { id: "koi", name: "金鲤", icon: "🐟", asset: "图片建模/金鲤灵兽.jpg" },
-  { id: "deer", name: "灵鹿", icon: "🦌", asset: "图片建模/灵鹿.png" },
-  { id: "cat", name: "月狸", icon: "🐈", asset: "图片建模/月狸.png" },
-  { id: "crane", name: "云鹤", icon: "🦢", asset: "图片建模/云鹤.png" },
-  { id: "rabbit", name: "玉兔", icon: "🐇", asset: "图片建模/玉兔.png" },
-  { id: "butterfly", name: "梦蝶", icon: "🦋", asset: "图片建模/梦蝶.png" },
-  { id: "moth", name: "月蛾", icon: "🦋", asset: "图片建模/月娥.png" },
-  { id: "owl", name: "夜枭", icon: "🦉", asset: "图片建模/夜枭.png" },
-  { id: "otter", name: "水獭", icon: "🦦", asset: "图片建模/水獭.png" },
-  { id: "serpent", name: "青蛇", icon: "🐍", asset: "图片建模/青蛇.png" },
-  { id: "goat", name: "云羊", icon: "🐐", asset: "图片建模/云羊.png" },
-  { id: "horse", name: "天马", icon: "🐎", asset: "图片建模/天马.png" },
-  { id: "dog", name: "灵犬", icon: "🐕", asset: "图片建模/灵犬.png" },
-  { id: "dragon", name: "虬龙", icon: "🐉", asset: "图片建模/虬龙.png" }
+  { id: "fox", name: "青狐", icon: "🦊", asset: "assets/beast-fox.png" },
+  { id: "bird", name: "赤鸟", icon: "🕊️", asset: "assets/beast-crimson-bird.jpg" },
+  { id: "turtle", name: "玄龟", icon: "🐢", asset: "assets/beast-turtle.jpg" },
+  { id: "ape", name: "白猿", icon: "🦍", asset: "assets/beast-ape.jpg" },
+  { id: "koi", name: "金鲤", icon: "🐟", asset: "assets/beast-koi.jpg" },
+  { id: "deer", name: "灵鹿", icon: "🦌", asset: "assets/beast-deer.png" },
+  { id: "cat", name: "月狸", icon: "🐈", asset: "assets/beast-moon-cat.png" },
+  { id: "crane", name: "云鹤", icon: "🦢", asset: "assets/beast-crane.png" },
+  { id: "rabbit", name: "玉兔", icon: "🐇", asset: "assets/beast-rabbit.png" },
+  { id: "butterfly", name: "梦蝶", icon: "🦋", asset: "assets/beast-dream-butterfly.png" },
+  { id: "moth", name: "月蛾", icon: "🦋", asset: "assets/beast-moon-moth.png" },
+  { id: "owl", name: "夜枭", icon: "🦉", asset: "assets/beast-night-owl.png" },
+  { id: "otter", name: "水獭", icon: "🦦", asset: "assets/beast-otter.png" },
+  { id: "serpent", name: "青蛇", icon: "🐍", asset: "assets/beast-serpent.png" },
+  { id: "goat", name: "云羊", icon: "🐐", asset: "assets/beast-cloud-ram.png" },
+  { id: "horse", name: "天马", icon: "🐎", asset: "assets/beast-heavenly-horse.png" },
+  { id: "dog", name: "灵犬", icon: "🐕", asset: "assets/beast-hound.png" },
+  { id: "dragon", name: "虬龙", icon: "🐉", asset: "assets/beast-dragon.png" }
 ];
 
 // 机关只写在关卡数据中；后续新增封印、巡游、五行等规则无需重写关卡流程。
