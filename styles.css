@@ -69,3 +69,10 @@ button { font:inherit; cursor:pointer; } button:disabled { cursor:not-allowed; o
 
 /* Matched cards are recreated when the board updates; suppress replaying their exit animation. */
 .card.is-matched { animation:none; opacity:0; }
+
+/* Existing game art used by the tool belt, board obstacle, and completion panel. */
+.board-obstacle { background:linear-gradient(rgba(14,45,49,.2),rgba(6,29,33,.52)),url("assets/board-stone-node.png") center / cover,#102f34; }
+.result-modal { background:linear-gradient(rgba(233,240,223,.88),rgba(201,223,208,.92)),url("assets/result-clear-bg.jpg") center / cover,#c9dfd0; }
+
+.share-tool-button { display:grid; grid-template-columns:24px 1fr auto; width:100%; min-height:42px; margin:7px 0 3px; padding:0 12px; align-items:center; gap:9px; border:1px solid rgba(224,196,107,.5); border-radius:7px; color:var(--ink); background:rgba(17,63,65,.62); text-align:left; }
+.share-tool-button:not(:disabled):hover { border-color:var(--gold); background:rgba(31,91,91,.72); }.share-tool-button:disabled { opacity:.58; }.share-tool-button span { color:var(--gold); font-size:1.15rem; font-weight:900; }.share-tool-button strong { font-size:.73rem; }.share-tool-button small { color:var(--muted); font-size:.62rem; }

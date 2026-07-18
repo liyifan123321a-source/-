@@ -23,35 +23,35 @@ const BEASTS = [
 
 // 机关只写在关卡数据中；后续新增封印、巡游、五行等规则无需重写关卡流程。
 const LEVELS = [
-  { id: 1, name: "初入山门", columns: 4, pairs: 8, moves: 16, xp: 40, chapter: "记忆教学", note: "连续翻开两张相同灵兽牌即可消除。" },
-  { id: 2, name: "云阶留痕", columns: 4, pairs: 8, moves: 14, xp: 50, chapter: "记忆教学", note: "先记住已经翻开的踪影，再做有把握的选择。" },
-  { id: 3, name: "月池回音", columns: 4, pairs: 8, moves: 13, xp: 60, chapter: "记忆教学", note: "观微镜可短暂展示全部未翻牌。" },
-  { id: 4, name: "松风旧径", columns: 4, pairs: 8, moves: 12, xp: 70, chapter: "记忆教学", note: "步数有限，尽量减少无把握的试探。" },
-  { id: 5, name: "星台试炼", columns: 4, pairs: 8, moves: 11, xp: 80, chapter: "记忆教学", note: "完成这一关，即可进入机关试炼。" },
-  { id: 6, name: "薄雾石径", columns: 4, pairs: 10, moves: 17, xp: 100, chapter: "机关教学", mechanisms: { fog: { indexes: [1, 18], unlock: "adjacent-match" } }, note: "消除一对相邻灵兽牌，才能驱散迷雾。" },
-  { id: 7, name: "朱印回廊", columns: 4, pairs: 10, moves: 18, xp: 110, chapter: "机关教学", mechanisms: { seal: { indexes: [3, 16] } }, note: "封印牌首次翻开只会解印，再次翻到才能消除。" },
-  { id: 8, name: "藏真石台", columns: 4, pairs: 10, moves: 17, xp: 120, chapter: "机关教学", mechanisms: { seal: { indexes: [0, 5, 11, 19] } }, note: "观察已解印的灵兽，留意它们可能的同伴。" },
-  { id: 9, name: "月影封台", columns: 4, pairs: 10, moves: 16, xp: 130, chapter: "机关教学", mechanisms: { seal: { indexes: [2, 7, 12, 17] } }, note: "封印数量增多，先规划需要二次翻开的牌。" },
-  { id: 10, name: "移星初阵", columns: 4, pairs: 10, moves: 18, xp: 140, chapter: "机关教学", mechanisms: { teleport: { routes: [{ source: 1, swap: [16, 19] }] } }, note: "翻开阵眼后，带有星标的两张牌会固定交换位置。" },
-  { id: 11, name: "双星换位", columns: 4, pairs: 10, moves: 17, xp: 150, chapter: "机关教学", mechanisms: { teleport: { routes: [{ source: 1, swap: [4, 7] }, { source: 18, swap: [12, 15] }] } }, note: "两座阵眼各自对应一组星标牌，交换规律不会改变。" },
-  { id: 12, name: "列宿回环", columns: 4, pairs: 10, moves: 16, xp: 160, chapter: "机关教学", mechanisms: { teleport: { routes: [{ source: 1, swap: [4, 7] }, { source: 10, swap: [12, 15] }, { source: 18, swap: [0, 3] }] } }, note: "先看清星标连线，再决定何时触发阵眼。" },
-  { id: 13, name: "幻形初现", columns: 4, pairs: 10, moves: 18, xp: 170, chapter: "机关教学", mechanisms: { disguise: { cards: [{ index: 2, as: "bird" }] } }, note: "伪装牌首次会显现假象，第二次翻开才显出真身。" },
-  { id: 14, name: "镜湖疑云", columns: 4, pairs: 10, moves: 17, xp: 180, chapter: "机关教学", mechanisms: { disguise: { cards: [{ index: 0, as: "koi" }, { index: 6, as: "fox" }, { index: 13, as: "ape" }] } }, note: "记住伪装牌的位置，别把第一次看到的图案当成真相。" },
-  { id: 15, name: "百兽幻踪", columns: 4, pairs: 10, moves: 16, xp: 190, chapter: "机关教学", mechanisms: { disguise: { cards: [{ index: 1, as: "bird" }, { index: 5, as: "turtle" }, { index: 14, as: "koi" }, { index: 18, as: "fox" }] } }, note: "多个假象会同时出现，第二次翻开才是可靠线索。" },
-  { id: 16, name: "雾锁朱印", columns: 6, pairs: 18, moves: 31, xp: 210, chapter: "组合试炼", mechanisms: { fog: { indexes: [2, 33], unlock: "adjacent-match" }, seal: { indexes: [5, 30] } }, note: "迷雾与封印同时出现：先创造相邻配对，再规划二次翻开。" },
-  { id: 17, name: "灵台叠禁", columns: 6, pairs: 18, moves: 29, xp: 230, chapter: "组合试炼", mechanisms: { fog: { indexes: [1, 10, 25] }, seal: { indexes: [6, 20, 35] } }, note: "更多封锁会压缩路线，谨慎保存已翻开的关键信息。" },
-  { id: 18, name: "星雾封关", columns: 6, pairs: 18, moves: 28, xp: 250, chapter: "组合试炼", mechanisms: { fog: { indexes: [0, 35] }, seal: { indexes: [5, 30] }, teleport: { routes: [{ source: 10, swap: [14, 17] }, { source: 25, swap: [18, 21] }] } }, note: "迷雾、封印与传送阵交织，先观察预告，再控制触发时机。" }
+  { id: 1, name: "初入山门", columns: 4, pairs: 8, moves: 18, xp: 40, chapter: "记忆教学", note: "连续翻开两张相同灵兽牌即可消除。" },
+  { id: 2, name: "云阶留痕", columns: 4, pairs: 8, moves: 16, xp: 50, chapter: "记忆教学", note: "先记住已经翻开的踪影，再做有把握的选择。" },
+  { id: 3, name: "月池回音", columns: 4, pairs: 8, moves: 15, xp: 60, chapter: "记忆教学", note: "观微镜可短暂展示全部未翻牌。" },
+  { id: 4, name: "松风旧径", columns: 4, pairs: 8, moves: 15, xp: 70, chapter: "记忆教学", note: "步数有限，尽量减少无把握的试探。" },
+  { id: 5, name: "星台试炼", columns: 4, pairs: 8, moves: 15, xp: 80, chapter: "记忆教学", note: "完成这一关，即可进入机关试炼。" },
+  { id: 6, name: "薄雾石径", columns: 4, pairs: 10, moves: 20, xp: 100, chapter: "机关教学", mechanisms: { fog: { indexes: [1, 18], unlock: "first-match" } }, note: "成功消除任意一对灵兽牌，即可驱散迷雾。" },
+  { id: 7, name: "朱印回廊", columns: 4, pairs: 10, moves: 20, xp: 110, chapter: "机关教学", mechanisms: { seal: { indexes: [3, 16] } }, note: "封印牌首次翻开只会解印，再次翻到才能消除。" },
+  { id: 8, name: "藏真石台", columns: 4, pairs: 10, moves: 20, xp: 120, chapter: "机关教学", mechanisms: { seal: { indexes: [0, 5, 11, 19] } }, note: "观察已解印的灵兽，留意它们可能的同伴。" },
+  { id: 9, name: "月影封台", columns: 4, pairs: 10, moves: 21, xp: 130, chapter: "机关教学", mechanisms: { seal: { indexes: [2, 7, 12, 17] } }, note: "封印数量增多，先规划需要二次翻开的牌。" },
+  { id: 10, name: "移星初阵", columns: 4, pairs: 10, moves: 20, xp: 140, chapter: "机关教学", mechanisms: { teleport: { routes: [{ source: 1, swap: [16, 19] }] } }, note: "翻开阵眼后，带有星标的两张牌会固定交换位置。" },
+  { id: 11, name: "双星换位", columns: 4, pairs: 10, moves: 20, xp: 150, chapter: "机关教学", mechanisms: { teleport: { routes: [{ source: 1, swap: [4, 7] }, { source: 18, swap: [12, 15] }] } }, note: "两座阵眼各自对应一组星标牌，交换规律不会改变。" },
+  { id: 12, name: "列宿回环", columns: 4, pairs: 10, moves: 20, xp: 160, chapter: "机关教学", mechanisms: { teleport: { routes: [{ source: 1, swap: [4, 7] }, { source: 10, swap: [12, 15] }, { source: 18, swap: [0, 3] }] } }, note: "先看清星标连线，再决定何时触发阵眼。" },
+  { id: 13, name: "幻形初现", columns: 4, pairs: 10, moves: 20, xp: 170, chapter: "机关教学", mechanisms: { disguise: { cards: [{ index: 2, as: "bird" }] } }, note: "伪装牌首次会显现假象，第二次翻开才显出真身。" },
+  { id: 14, name: "镜湖疑云", columns: 4, pairs: 10, moves: 21, xp: 180, chapter: "机关教学", mechanisms: { disguise: { cards: [{ index: 0, as: "koi" }, { index: 6, as: "fox" }, { index: 13, as: "ape" }] } }, note: "记住伪装牌的位置，别把第一次看到的图案当成真相。" },
+  { id: 15, name: "百兽幻踪", columns: 4, pairs: 10, moves: 22, xp: 190, chapter: "机关教学", mechanisms: { disguise: { cards: [{ index: 1, as: "bird" }, { index: 5, as: "turtle" }, { index: 14, as: "koi" }, { index: 18, as: "fox" }] } }, note: "多个假象会同时出现，第二次翻开才是可靠线索。" },
+  { id: 16, name: "雾锁朱印", columns: 6, pairs: 18, moves: 35, xp: 210, chapter: "组合试炼", mechanisms: { fog: { indexes: [2, 33], unlock: "first-match" }, seal: { indexes: [5, 30] } }, note: "迷雾与封印同时出现：先消除一对灵兽，再规划二次翻开。" },
+  { id: 17, name: "灵台叠禁", columns: 6, pairs: 18, moves: 34, xp: 230, chapter: "组合试炼", mechanisms: { fog: { indexes: [1, 10, 25], unlock: "first-match" }, seal: { indexes: [6, 20, 35] } }, note: "更多封锁会压缩路线，先消除一对灵兽再保存关键信息。" },
+  { id: 18, name: "星雾封关", columns: 6, pairs: 18, moves: 34, xp: 250, chapter: "组合试炼", mechanisms: { fog: { indexes: [0, 35], unlock: "first-match" }, seal: { indexes: [5, 30] }, teleport: { routes: [{ source: 10, swap: [14, 17] }, { source: 25, swap: [18, 21] }] } }, note: "迷雾、封印与传送阵交织，先消除一对灵兽，再控制触发时机。" }
 ];
 
 const CHALLENGE_TEMPLATES = [
-  { id: "mist-star", name: "周天迷阵", columns: 5, rows: 5, pairs: 12, moves: 15, xp: 260, blockedIndexes: [12], tools: { mirror: 0, tracker: 1, breaker: 1 }, mechanisms: { fog: 3, teleport: 2 }, note: "极难试炼：中心石位不可翻开；迷雾需相邻消除，两个星标传送阵按固定位置换位。" },
-  { id: "seal-orbit", name: "封星回廊", columns: 6, rows: 6, pairs: 18, moves: 23, xp: 300, tools: { mirror: 0, tracker: 1, breaker: 0 }, mechanisms: { seal: 6, teleport: 3 }, note: "极难试炼：六张封印牌与三座固定传送阵同时生效，容错极低。" },
-  { id: "mist-seal", name: "雾海天关", columns: 6, rows: 6, pairs: 18, moves: 24, xp: 320, tools: { mirror: 0, tracker: 1, breaker: 1 }, mechanisms: { fog: 4, seal: 4, teleport: 2 }, note: "极难试炼：迷雾、封印与传送阵交错，只有精准记忆与触发时机能通关。" }
+  { id: "mist-star", name: "周天迷阵", columns: 5, rows: 5, pairs: 12, moves: 18, xp: 260, blockedIndexes: [12], tools: { mirror: 0, tracker: 1, breaker: 1 }, mechanisms: { fog: 3, teleport: 2 }, note: "极难试炼：中心石位不可翻开；成功消除一对即可驱散迷雾，两个星标传送阵按固定位置换位。" },
+  { id: "seal-orbit", name: "封星回廊", columns: 6, rows: 6, pairs: 18, moves: 26, xp: 300, tools: { mirror: 0, tracker: 1, breaker: 0 }, mechanisms: { seal: 6, teleport: 3 }, note: "极难试炼：六张封印牌与三座固定传送阵同时生效，容错更合理。" },
+  { id: "mist-seal", name: "雾海天关", columns: 6, rows: 6, pairs: 18, moves: 28, xp: 320, tools: { mirror: 0, tracker: 1, breaker: 1 }, mechanisms: { fog: 4, seal: 4, teleport: 2 }, note: "极难试炼：迷雾、封印与传送阵交错，需要记忆与触发时机。" }
 ];
 
 const TUTORIALS = {
   memory: { kicker: "初入山门", title: "记住灵兽的踪影", description: "连续翻开两张相同灵兽牌即可消除。图案不同会短暂停留后盖回，每一回合都会消耗一步。", demo: "<div class=\"demo-card is-open\">青狐</div><span class=\"demo-link\">+</span><div class=\"demo-card is-open\">青狐</div><span class=\"demo-result\">消除</span>" },
-  fog: { kicker: "机关初现", title: "迷雾需要相邻灵息驱散", description: "被迷雾覆盖的牌暂时无法翻开。消除一对相邻的灵兽牌后，迷雾才会解除；破禁符也可以直接化开迷雾。", demo: "<div class=\"demo-card is-fog\">迷雾</div><span class=\"demo-arrow\">←</span><div class=\"demo-card is-open\">相邻一对</div><span class=\"demo-result\">解封</span>" },
+  fog: { kicker: "机关初现", title: "成功配对即可驱散迷雾", description: "被迷雾覆盖的牌暂时无法翻开。成功消除任意一对灵兽牌后，迷雾就会解除；破禁符也可以直接化开迷雾。", demo: "<div class=\"demo-card is-fog\">迷雾</div><span class=\"demo-arrow\">←</span><div class=\"demo-card is-open\">任意一对</div><span class=\"demo-result\">解封</span>" },
   seal: { kicker: "机关初现", title: "封印牌需要二次翻开", description: "封印牌第一次翻开只会解除封印，即使图案相同也不会立即消除。记住它的位置，之后再次翻开才会显示真实灵兽。", demo: "<div class=\"demo-card is-seal\">封印</div><span class=\"demo-arrow\">→</span><div class=\"demo-card is-open\">真实灵兽</div><span class=\"demo-result\">二次翻开</span>" },
   teleport: { kicker: "机关初现", title: "传送阵按星标固定换位", description: "翻开阵眼后，棋盘上带星标的两张未翻牌会交换位置。先观察预告关系，再决定何时触发阵眼。", demo: "<div class=\"demo-card is-portal\">阵眼</div><span class=\"demo-arrow\">→</span><div class=\"demo-card is-star\">星标</div><span class=\"demo-card is-star\">星标</span>" },
   disguise: { kicker: "机关初现", title: "伪装牌先显假象，再露真身", description: "伪装牌第一次翻开显示的是假灵兽，本回合结束后才算识破。第二次翻开才会显示真实牌面并参与配对。", demo: "<div class=\"demo-card is-mask\">假象</div><span class=\"demo-arrow\">→</span><div class=\"demo-card is-open\">真身</div><span class=\"demo-result\">识破</span>" },
@@ -63,6 +63,7 @@ const state = {
   locked: false, fogUnlocked: false, tools: { mirror: 1, tracker: 1, breaker: 0 }
 };
 const TOOL_LABELS = { mirror: "显露全部", tracker: "指向行列", breaker: "解除迷雾" };
+const TRACKER_MAX_USES = 2;
 const el = {
   screens: document.querySelectorAll(".screen"), homeLevel: document.querySelector("#homeLevel"), homeXpFill: document.querySelector("#homeXpFill"), homeXpText: document.querySelector("#homeXpText"), currentStage: document.querySelector("#currentStage"), mainlineProgress: document.querySelector("#mainlineProgress"), streakLine: document.querySelector("#streakLine"), weeklyLabel: document.querySelector("#weeklyLabel"), levelMini: document.querySelector("#levelMini"), levelList: document.querySelector("#levelList"), playChapter: document.querySelector("#playChapter"), playName: document.querySelector("#playName"), movesValue: document.querySelector("#movesValue"), mistakesValue: document.querySelector("#mistakesValue"), objectiveText: document.querySelector("#objectiveText"), pairProgress: document.querySelector("#pairProgress"), mechanismNote: document.querySelector("#mechanismNote"), gameBoard: document.querySelector("#gameBoard"), mirrorTool: document.querySelector("#mirrorTool"), trackerTool: document.querySelector("#trackerTool"), breakerTool: document.querySelector("#breakerTool"), tutorialModal: document.querySelector("#tutorialModal"), tutorialKicker: document.querySelector("#tutorialKicker"), tutorialTitle: document.querySelector("#tutorialTitle"), tutorialDescription: document.querySelector("#tutorialDescription"), tutorialDemo: document.querySelector("#tutorialDemo"), tutorialStartButton: document.querySelector("#tutorialStartButton"), resultModal: document.querySelector("#resultModal"), resultKicker: document.querySelector("#resultKicker"), resultTitle: document.querySelector("#resultTitle"), resultDescription: document.querySelector("#resultDescription"), resultMoves: document.querySelector("#resultMoves"), resultMistakes: document.querySelector("#resultMistakes"), resultTools: document.querySelector("#resultTools"), resultStars: document.querySelector("#resultStars"), resultRecord: document.querySelector("#resultRecord"), xpGain: document.querySelector("#xpGain"), replayButton: document.querySelector("#replayButton"), reviewButton: document.querySelector("#reviewButton"), soundToggle: document.querySelector("#soundToggle"), playSoundToggle: document.querySelector("#playSoundToggle")
 };
@@ -193,7 +194,7 @@ function startLevel(levelOrId, options = {}) {
   hideTutorial();
   state.level = level; state.open = []; state.matched = 0; state.moves = level.moves; state.mistakes = 0; state.toolsUsed = 0; state.locked = false;
   state.progress.lastRuns = { ...state.progress.lastRuns, [level.id]: { seed: runSeed, updatedAt: Date.now() } }; saveProgress();
-  state.fogUnlocked = !level.mechanisms?.fog; state.tools = level.tools ? { ...level.tools } : { mirror: 1, tracker: 1, breaker: level.mechanisms?.fog ? 1 : 0 };
+  state.fogUnlocked = !level.mechanisms?.fog; state.tools = level.tools ? { ...level.tools } : { mirror: 1, tracker: 1, breaker: level.mechanisms?.fog ? 1 : 0 }; state.trackerShareClaimed = false;
   state.cards = cards;
   level.mechanisms?.fog?.indexes.forEach((index) => { if (state.cards[index]) state.cards[index].fogged = true; });
   level.mechanisms?.seal?.indexes.forEach((index) => { if (state.cards[index]) state.cards[index].sealed = true; });
@@ -228,8 +229,24 @@ function renderBoard() {
   }).join("");
 }
 
-function renderHud() { el.movesValue.textContent = state.moves; el.mistakesValue.textContent = state.mistakes; el.pairProgress.textContent = `${state.matched} / ${state.level.pairs}`; setTool(el.mirrorTool, state.tools.mirror); setTool(el.trackerTool, state.tools.tracker); setTool(el.breakerTool, state.tools.breaker); }
-function setTool(button, amount) { button.disabled = amount <= 0; button.querySelector("small").textContent = amount > 0 ? TOOL_LABELS[button.id.replace("Tool", "")] : "已用完"; }
+function renderHud() { el.movesValue.textContent = state.moves; el.mistakesValue.textContent = state.mistakes; el.pairProgress.textContent = `${state.matched} / ${state.level.pairs}`; setTool(el.mirrorTool, state.tools.mirror); setTool(el.trackerTool, state.tools.tracker); setTool(el.breakerTool, state.tools.breaker); renderShareTrackerButton(); }
+function setTool(button, amount) { button.disabled = amount <= 0; const label = TOOL_LABELS[button.id.replace("Tool", "")]; button.querySelector("small").textContent = amount > 0 ? `${label} · ${amount} 次` : "已用完"; }
+function renderShareTrackerButton() { const button = document.querySelector("#shareTrackerButton"); const claimed = Boolean(state.trackerShareClaimed); button.disabled = claimed || state.tools.tracker >= TRACKER_MAX_USES; button.querySelector("small").textContent = claimed ? "本局已领取" : "本局额外获得 1 次寻踪香"; }
+async function shareForTracker() {
+  if (state.trackerShareClaimed || state.tools.tracker >= TRACKER_MAX_USES) return;
+  const shareData = { title: "灵兽迷踪", text: "来云隐山门寻回散落山河的灵兽。", url: window.location.href };
+  try {
+    if (navigator.share) await navigator.share(shareData);
+    else if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(window.location.href);
+    else window.prompt("复制链接后分享，即可领取寻踪香：", window.location.href);
+    state.trackerShareClaimed = true;
+    state.tools.tracker = Math.min(TRACKER_MAX_USES, state.tools.tracker + 1);
+    el.mechanismNote.textContent = "香火已续：本局额外获得 1 次寻踪香。";
+    renderHud();
+  } catch (error) {
+    if (error?.name !== "AbortError") el.mechanismNote.textContent = "分享未完成，暂未获得寻踪香。";
+  }
+}
 
 el.gameBoard.addEventListener("click", (event) => { const cardEl = event.target.closest(".card"); if (cardEl) flipCard(Number(cardEl.dataset.index)); });
 
@@ -256,20 +273,13 @@ function activateTeleport(source) {
   renderBoard();
 }
 
-function isAdjacent(indexA, indexB) {
-  const columns = state.level.columns; const rowA = Math.floor(indexA / columns); const rowB = Math.floor(indexB / columns);
-  return Math.abs(rowA - rowB) + Math.abs((indexA % columns) - (indexB % columns)) === 1;
-}
-
 function resolvePair() {
   state.locked = true; state.moves -= 1;
   const [firstUid, secondUid] = state.open; const first = state.cards.find((card) => card?.uid === firstUid); const second = state.cards.find((card) => card?.uid === secondUid);
   const sealOpenedThisTurn = first.sealOpenedThisTurn || second.sealOpenedThisTurn; const disguiseOpenedThisTurn = first.disguiseOpenedThisTurn || second.disguiseOpenedThisTurn; const needsAnotherTurn = sealOpenedThisTurn || disguiseOpenedThisTurn;
   if (first.id === second.id && !needsAnotherTurn) {
     first.matched = true; second.matched = true; state.matched += 1; playSound("match");
-    const positions = [state.cards.indexOf(first), state.cards.indexOf(second)];
-    if (!state.fogUnlocked && isAdjacent(...positions)) { state.fogUnlocked = true; playSound("unlock"); el.mechanismNote.textContent = "相邻灵兽灵息相合，迷雾已解除。"; }
-    else if (!state.fogUnlocked) { el.mechanismNote.textContent = "配对成功，但需消除一对相邻灵兽牌才能驱散迷雾。"; }
+    if (!state.fogUnlocked) { state.fogUnlocked = true; playSound("unlock"); el.mechanismNote.textContent = "灵兽灵息相合，迷雾已解除。"; }
     window.setTimeout(() => { state.open = []; state.locked = false; renderBoard(); renderHud(); if (state.matched === state.level.pairs) finishLevel(); else if (state.moves <= 0) finishLevel(true); }, 420);
   } else {
     if (!needsAnotherTurn) { state.mistakes += 1; playSound("miss"); }
@@ -321,6 +331,7 @@ el.reviewButton.addEventListener("click", () => { el.resultModal.classList.remov
 document.querySelector("#nextButton").addEventListener("click", () => { el.resultModal.classList.remove("is-visible"); if (state.level.generated || state.level.id === LEVELS.length) startWeeklyChallenge(); else { const next = LEVELS.find((level) => level.id === state.level.id + 1); if (next) startLevel(next); else startWeeklyChallenge(); } });
 el.tutorialStartButton.addEventListener("click", () => { const key = tutorialKeyFor(state.level); if (key) { state.progress.tutorials = { ...state.progress.tutorials, [key]: true }; saveProgress(); } hideTutorial(); state.locked = false; });
 el.mirrorTool.addEventListener("click", useMirror); el.trackerTool.addEventListener("click", useTracker); el.breakerTool.addEventListener("click", useBreaker);
+document.querySelector("#shareTrackerButton").addEventListener("click", shareForTracker);
 el.soundToggle.addEventListener("click", toggleSound); el.playSoundToggle.addEventListener("click", toggleSound);
 document.querySelector("#resetButton").addEventListener("click", () => { if (!window.confirm("确定重置等级与教学关进度吗？")) return; state.progress = { xp: 0, completed: {}, tutorials: {}, soundEnabled: state.progress.soundEnabled, lastRuns: {} }; saveProgress(); renderProfile(); renderSoundButtons(); });
 renderProfile(); renderSoundButtons();
