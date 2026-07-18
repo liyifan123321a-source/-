@@ -16,22 +16,22 @@ button { font:inherit; cursor:pointer; } button:disabled { cursor:not-allowed; o
 @media (max-height:720px) { .hero-copy { padding-top:220px; }.home-grid { margin-top:15px; }.home-tile { min-height:92px; }.tile-symbol { margin-bottom:10px; }.board-wrap { padding:3px 0; }.game-board { gap:6px; }.mechanism-note { padding-top:5px; }.toolbelt { padding-top:5px; } }
 
 /* Generated art is kept behind UI overlays so the board remains legible at phone size. */
-.mountain-scene { background:linear-gradient(rgba(12,42,44,.18),rgba(12,42,44,.72)),url("assets/home-mountain-gate.png") center top / cover no-repeat,#19494e; }
+.mountain-scene { background:linear-gradient(rgba(12,42,44,.18),rgba(12,42,44,.72)),url("assets/home-mountain-gate.jpg") center top / cover no-repeat,#19494e; }
 .mountain-scene::before { opacity:.25; background:linear-gradient(180deg,transparent 44%,#0d2e31 100%); }
 .moon,.peak,.river,.gate,.scene-beast { display:none; }
-.play-screen { background:linear-gradient(rgba(8,34,37,.82),rgba(8,34,37,.92)),url("assets/game-board.png") center / cover,#0b282c; }
+.play-screen { background:linear-gradient(rgba(8,34,37,.82),rgba(8,34,37,.92)),url("assets/game-board.jpg") center / cover,#0b282c; }
 .card-back { background:linear-gradient(rgba(11,43,47,.08),rgba(11,43,47,.25)),url("assets/card-back.jpg") center / cover,#163d40; }
 .card-back::before { content:""; width:28%; aspect-ratio:1; border:1px solid rgba(237,208,112,.7); border-radius:50%; box-shadow:0 0 18px rgba(239,202,101,.45); }
 .beast-art { width:100%; height:100%; object-fit:cover; }
 .beast-icon.is-fallback { display:none; }
 .beast-art[hidden] + .beast-icon.is-fallback { display:block; }
 .beast-name { z-index:1; padding:2px 5px; border-radius:3px; background:rgba(233,241,226,.82); }
-.card.is-fogged .card-back { background:linear-gradient(rgba(100,123,124,.5),rgba(60,79,81,.62)),url("assets/mechanism-fog.png") center / cover,#4d6c6c; }
+.card.is-fogged .card-back { background:linear-gradient(rgba(100,123,124,.5),rgba(60,79,81,.62)),url("assets/mechanism-fog.jpg") center / cover,#4d6c6c; }
 .card.is-fogged .card-back::before { border-color:#ecf3ed; box-shadow:0 0 20px rgba(236,243,237,.45); }
 .card.is-hint .card-back { animation:hint-pulse .7s ease-in-out infinite alternate; }
-.card.is-sealed .card-back { background:linear-gradient(rgba(67,37,36,.42),rgba(44,29,31,.62)),url("assets/mechanism-seal.png") center / cover,#533d3d; border-color:rgba(230,119,98,.82); }
+.card.is-sealed .card-back { background:linear-gradient(rgba(67,37,36,.42),rgba(44,29,31,.62)),url("assets/mechanism-seal.jpg") center / cover,#533d3d; border-color:rgba(230,119,98,.82); }
 .card.is-sealed .card-back::before { width:36%; border-radius:4px; border-color:#f0a491; box-shadow:0 0 18px rgba(232,119,98,.5); }
-.card.is-teleport .card-back { background:linear-gradient(rgba(14,55,58,.34),rgba(15,34,45,.58)),url("assets/mechanism-teleport.png") center / cover,#1b4950; border-color:rgba(232,192,107,.9); }
+.card.is-teleport .card-back { background:linear-gradient(rgba(14,55,58,.34),rgba(15,34,45,.58)),url("assets/mechanism-teleport.jpg") center / cover,#1b4950; border-color:rgba(232,192,107,.9); }
 .card.is-teleport .card-back::before { width:36%; border-color:#f4d684; box-shadow:0 0 20px rgba(232,192,107,.7); animation:teleport-pulse 1s ease-in-out infinite alternate; }
 .card.is-teleport-target .card-back { outline:2px dashed rgba(185,242,205,.88); outline-offset:-5px; }
 .card.is-teleport-target .card-back::after { content:"✦"; position:absolute; top:5px; right:6px; color:#d4f5d6; font-size:.68rem; text-shadow:0 0 8px rgba(185,242,205,.8); }
@@ -65,14 +65,33 @@ button { font:inherit; cursor:pointer; } button:disabled { cursor:not-allowed; o
 .result-record { overflow-wrap:anywhere; }
 
 .tool-art { width:24px; height:24px; margin:0 auto; object-fit:contain; }
-.card.is-disguised .card-back { background:linear-gradient(rgba(54,48,55,.38),rgba(31,48,49,.68)),url("assets/mechanism-disguise.png") center / cover,#31575a; }
+.card.is-disguised .card-back { background:linear-gradient(rgba(54,48,55,.38),rgba(31,48,49,.68)),url("assets/mechanism-disguise.jpg") center / cover,#31575a; }
 
 /* Matched cards are recreated when the board updates; suppress replaying their exit animation. */
 .card.is-matched { animation:none; opacity:0; }
 
 /* Existing game art used by the tool belt, board obstacle, and completion panel. */
-.board-obstacle { background:linear-gradient(rgba(14,45,49,.2),rgba(6,29,33,.52)),url("assets/board-stone-node.png") center / cover,#102f34; }
+.board-obstacle { background:linear-gradient(rgba(14,45,49,.2),rgba(6,29,33,.52)),url("assets/board-stone-node.jpg") center / cover,#102f34; }
 .result-modal { background:linear-gradient(rgba(233,240,223,.88),rgba(201,223,208,.92)),url("assets/result-clear-bg.jpg") center / cover,#c9dfd0; }
 
 .share-tool-button { display:grid; grid-template-columns:24px 1fr auto; width:100%; min-height:42px; margin:7px 0 3px; padding:0 12px; align-items:center; gap:9px; border:1px solid rgba(224,196,107,.5); border-radius:7px; color:var(--ink); background:rgba(17,63,65,.62); text-align:left; }
 .share-tool-button:not(:disabled):hover { border-color:var(--gold); background:rgba(31,91,91,.72); }.share-tool-button:disabled { opacity:.58; }.share-tool-button span { color:var(--gold); font-size:1.15rem; font-weight:900; }.share-tool-button strong { font-size:.73rem; }.share-tool-button small { color:var(--muted); font-size:.62rem; }
+
+/* Keep the board and tool controls in normal flow on short mobile viewports. */
+.game-shell { overflow-x:hidden; overflow-y:visible; }
+.play-screen { min-height:100dvh; height:auto; overflow:visible; }
+.play-screen .board-wrap { flex:0 0 auto; min-height:auto; }
+
+@media (max-height:720px) {
+  .play-screen { padding-bottom:calc(20px + env(safe-area-inset-bottom, 0)); }
+  .play-screen .board-wrap { padding:8px 0; }
+  .play-screen .game-board { width:min(100%,360px); gap:6px; }
+  .play-screen .toolbelt { margin-top:4px; }
+}
+
+@media (max-height:620px) {
+  .play-screen .game-board { width:min(100%,320px); gap:5px; }
+  .play-screen .toolbelt { gap:5px; }
+  .play-screen .tool-button { min-height:60px; }
+  .play-screen .share-tool-button { min-height:40px; }
+}

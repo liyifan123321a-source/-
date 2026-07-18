@@ -1,24 +1,24 @@
 const STORAGE_KEY = "spiritBeastTrail.v2";
 
 const BEASTS = [
-  { id: "fox", name: "青狐", icon: "🦊", asset: "assets/beast-fox.png" },
+  { id: "fox", name: "青狐", icon: "🦊", asset: "assets/beast-fox.jpg" },
   { id: "bird", name: "赤鸟", icon: "🕊️", asset: "assets/beast-crimson-bird.jpg" },
   { id: "turtle", name: "玄龟", icon: "🐢", asset: "assets/beast-turtle.jpg" },
   { id: "ape", name: "白猿", icon: "🦍", asset: "assets/beast-ape.jpg" },
   { id: "koi", name: "金鲤", icon: "🐟", asset: "assets/beast-koi.jpg" },
-  { id: "deer", name: "灵鹿", icon: "🦌", asset: "assets/beast-deer.png" },
-  { id: "cat", name: "月狸", icon: "🐈", asset: "assets/beast-moon-cat.png" },
-  { id: "crane", name: "云鹤", icon: "🦢", asset: "assets/beast-crane.png" },
-  { id: "rabbit", name: "玉兔", icon: "🐇", asset: "assets/beast-rabbit.png" },
-  { id: "butterfly", name: "梦蝶", icon: "🦋", asset: "assets/beast-dream-butterfly.png" },
-  { id: "moth", name: "月蛾", icon: "🦋", asset: "assets/beast-moon-moth.png" },
-  { id: "owl", name: "夜枭", icon: "🦉", asset: "assets/beast-night-owl.png" },
-  { id: "otter", name: "水獭", icon: "🦦", asset: "assets/beast-otter.png" },
-  { id: "serpent", name: "青蛇", icon: "🐍", asset: "assets/beast-serpent.png" },
-  { id: "goat", name: "云羊", icon: "🐐", asset: "assets/beast-cloud-ram.png" },
-  { id: "horse", name: "天马", icon: "🐎", asset: "assets/beast-heavenly-horse.png" },
-  { id: "dog", name: "灵犬", icon: "🐕", asset: "assets/beast-hound.png" },
-  { id: "dragon", name: "虬龙", icon: "🐉", asset: "assets/beast-dragon.png" }
+  { id: "deer", name: "灵鹿", icon: "🦌", asset: "assets/beast-deer.jpg" },
+  { id: "cat", name: "月狸", icon: "🐈", asset: "assets/beast-moon-cat.jpg" },
+  { id: "crane", name: "云鹤", icon: "🦢", asset: "assets/beast-crane.jpg" },
+  { id: "rabbit", name: "玉兔", icon: "🐇", asset: "assets/beast-rabbit.jpg" },
+  { id: "butterfly", name: "梦蝶", icon: "🦋", asset: "assets/beast-dream-butterfly.jpg" },
+  { id: "moth", name: "月蛾", icon: "🦋", asset: "assets/beast-moon-moth.jpg" },
+  { id: "owl", name: "夜枭", icon: "🦉", asset: "assets/beast-night-owl.jpg" },
+  { id: "otter", name: "水獭", icon: "🦦", asset: "assets/beast-otter.jpg" },
+  { id: "serpent", name: "青蛇", icon: "🐍", asset: "assets/beast-serpent.jpg" },
+  { id: "goat", name: "云羊", icon: "🐐", asset: "assets/beast-cloud-ram.jpg" },
+  { id: "horse", name: "天马", icon: "🐎", asset: "assets/beast-heavenly-horse.jpg" },
+  { id: "dog", name: "灵犬", icon: "🐕", asset: "assets/beast-hound.jpg" },
+  { id: "dragon", name: "虬龙", icon: "🐉", asset: "assets/beast-dragon.jpg" }
 ];
 
 // 机关只写在关卡数据中；后续新增封印、巡游、五行等规则无需重写关卡流程。
@@ -224,7 +224,7 @@ function renderBoard() {
     if (!card) return `<span class="board-obstacle" aria-label="不可翻开的机关石位"></span>`;
     const open = state.open.includes(card.uid); const fogged = card.fogged && !state.fogUnlocked;
     const sealed = card.sealed && !card.sealSeen; const teleport = Boolean(card.teleportRoute && !card.teleportTriggered); const target = Boolean(card.teleportTarget); const disguised = card.disguised && !card.disguiseSeen; const display = (card.disguiseOpenedThisTurn || disguised) ? BEASTS.find((beast) => beast.id === card.disguiseId) || card : card;
-    const art = display.asset ? `<img class="beast-art" src="${display.asset}" alt="" onerror="this.hidden=true">` : "";
+    const art = display.asset ? `<img class="beast-art" src="${display.asset}" alt="" decoding="async" onerror="this.hidden=true">` : "";
     return `<button class="card ${open ? "is-face-up" : ""} ${card.matched ? "is-matched" : ""} ${fogged ? "is-fogged" : ""} ${sealed ? "is-sealed" : ""} ${teleport ? "is-teleport" : ""} ${target ? "is-teleport-target" : ""} ${disguised ? "is-disguised" : ""}" data-index="${index}" type="button" ${card.matched ? "disabled" : ""} aria-label="${open ? display.name : fogged ? "被迷雾封锁的灵兽牌" : sealed ? "被封印的灵兽牌" : teleport ? "传送阵眼" : target ? "传送目标牌" : disguised ? "伪装灵兽牌" : "未翻开灵兽牌"}"><span class="card-inner"><span class="card-face card-back"></span><span class="card-face card-front">${art}<span class="beast-icon ${display.asset ? "is-fallback" : ""}">${display.icon}</span><span class="beast-name">${display.name}</span></span></span></button>`;
   }).join("");
 }
