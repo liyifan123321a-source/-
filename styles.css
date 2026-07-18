@@ -66,3 +66,6 @@ button { font:inherit; cursor:pointer; } button:disabled { cursor:not-allowed; o
 
 .tool-art { width:24px; height:24px; margin:0 auto; object-fit:contain; }
 .card.is-disguised .card-back { background:linear-gradient(rgba(54,48,55,.38),rgba(31,48,49,.68)),url("assets/mechanism-disguise.png") center / cover,#31575a; }
+
+/* Matched cards are recreated when the board updates; suppress replaying their exit animation. */
+.card.is-matched { animation:none; opacity:0; }

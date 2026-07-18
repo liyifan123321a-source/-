@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>灵兽迷踪 - 图片检查</title>
+    <style>
+      body { max-width: 920px; margin: 0 auto; padding: 24px; color: #173c3e; font-family: "Microsoft YaHei", sans-serif; background: #edf3ec; }
+      h1 { margin: 0 0 8px; font-size: 24px; }
+      p { color: #557668; }
+      #summary { padding: 12px; border-radius: 6px; color: #fff; background: #1b5253; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-top: 18px; }
+      .item { padding: 8px; border: 1px solid #c7d7ca; border-radius: 6px; background: #fff; }
+      .item.bad { border-color: #c96a5a; background: #fff0ed; }
+      img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #dbe7dc; }
+      small { display: block; margin-top: 7px; overflow-wrap: anywhere; font-size: 11px; }
+    </style>
+  </head>
+  <body>
+    <h1>灵兽迷踪图片检查</h1>
+    <p>绿色代表图片已上传；红色代表该文件没有上传成功或文件名不一致。</p>
+    <div id="summary">正在检查图片...</div>
+    <div class="grid" id="grid"></div>
+    <script>
+      const files = [
+        "home-mountain-gate.png", "game-board.png", "card-back.jpg", "mechanism-fog.png",
+        "mechanism-seal.png", "mechanism-teleport.png", "mechanism-disguise.png", "tool-insight-mirror.png",
+        "beast-fox.png", "beast-crimson-bird.jpg", "beast-turtle.jpg", "beast-ape.jpg", "beast-koi.jpg",
+        "beast-deer.png", "beast-moon-cat.png", "beast-crane.png", "beast-rabbit.png", "beast-dream-butterfly.png",
+        "beast-moon-moth.png", "beast-night-owl.png", "beast-otter.png", "beast-serpent.png", "beast-cloud-ram.png",
+        "beast-heavenly-horse.png", "beast-hound.png", "beast-dragon.png"
+      ];
+      const grid = document.querySelector("#grid");
+      let loaded = 0;
+      let failed = 0;
+      const update = () => { document.querySelector("#summary").textContent = failed ? `已加载 ${loaded} 张，缺失 ${failed} 张` : `全部 ${loaded} 张图片已成功加载`; };
+      files.forEach((file) => {
+        const item = document.createElement("div");
+        item.className = "item";
+        const image = new Image();
+        image.alt = file;
+        image.onload = () => { loaded += 1; update(); };
+        image.onerror = () => { failed += 1; item.classList.add("bad"); update(); };
+        image.src = `assets/${file}`;
+        const label = document.createElement("small");
+        label.textContent = file;
+        item.append(image, label);
+        grid.append(item);
+      });
+    </script>
+  </body>
+</html>
