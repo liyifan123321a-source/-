@@ -8,7 +8,21 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <main class="game-shell">
+    <section class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="正在加载灵兽迷踪">
+      <div class="loading-scene" aria-hidden="true"></div>
+      <div class="loading-content">
+        <p class="eyebrow">云隐山门 · 灵息汇聚</p>
+        <div class="loading-emblem" aria-hidden="true"><i></i></div>
+        <h1>灵兽迷踪</h1>
+        <p class="loading-status" id="loadingStatus">正在唤醒山门灵息</p>
+        <div class="loading-track" aria-hidden="true"><i id="loadingFill"></i></div>
+        <div class="loading-actions" id="loadingActions" hidden>
+          <button class="primary-button" id="enterGameButton" type="button">进入山门 <span>→</span></button>
+          <button class="loading-retry" id="retryLoadingButton" type="button" hidden>重新尝试</button>
+        </div>
+      </div>
+    </section>
+    <main class="game-shell is-loading" id="gameShell" aria-hidden="true">
       <section class="screen home-screen is-active" id="homeScreen">
         <header class="topbar">
           <div class="brand">灵兽迷踪</div>
@@ -90,6 +104,7 @@
         <button class="share-tool-button" id="shareTrackerButton" type="button" aria-label="分享游戏，领取一次寻踪香" title="分享游戏，领取一次寻踪香"><span aria-hidden="true">↗</span><strong>分享求香</strong><small>本局额外获得 1 次寻踪香</small></button>
       </section>
     </main>
+    <noscript><style>.loading-screen{display:none}.game-shell{opacity:1!important;pointer-events:auto!important}</style></noscript>
 
     <div class="modal-layer" id="tutorialModal" aria-hidden="true">
       <section class="tutorial-modal" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">

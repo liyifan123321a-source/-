@@ -42,6 +42,14 @@ const BESTIARY_LORE = {
   dragon: "虬龙尚未成年，却已懂得以短角守住一湾清泉。"
 };
 
+const RUNTIME_ASSETS = [
+  ...BEASTS.map((beast) => beast.asset),
+  "assets/home-mountain-gate.jpg", "assets/game-board.jpg", "assets/card-back.jpg",
+  "assets/mechanism-fog.jpg", "assets/mechanism-seal.jpg", "assets/mechanism-teleport.jpg", "assets/mechanism-disguise.jpg",
+  "assets/tool-insight-mirror.jpg", "assets/tool-tracker-incense.jpg", "assets/tool-breaker-talisman.jpg",
+  "assets/board-stone-node.jpg", "assets/result-clear-bg.jpg"
+];
+
 // 机关只写在关卡数据中；后续新增封印、巡游、五行等规则无需重写关卡流程。
 const LEVELS = [
   { id: 1, name: "初入山门", columns: 4, pairs: 8, moves: 18, xp: 40, chapter: "记忆教学", note: "连续翻开两张相同灵兽牌即可消除。" },
@@ -91,6 +99,24 @@ const el = {
 
 function loadProgress() { try { return { xp: 0, completed: {}, tutorials: {}, discovered: {}, soundEnabled: true, lastRuns: {}, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") }; } catch { return { xp: 0, completed: {}, tutorials: {}, discovered: {}, soundEnabled: true, lastRuns: {} }; } }
 function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress)); }
+function preloadAsset(source, report) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const image = new Image();
+    const finish = (loaded) => { if (settled) return; settled = true; window.clearTimeout(timeout); report(loaded); resolve(loaded); };
+    const timeout = window.setTimeout(() => finish(false), 10000);
+    image.onload = () => finish(true); image.onerror = () => finish(false); image.decoding = "async"; image.src = source;
+  });
+}
+async function preloadGameAssets() {
+  const status = document.querySelector("#loadingStatus"); const fill = document.querySelector("#loadingFill"); const actions = document.querySelector("#loadingActions"); const retry = document.querySelector("#retryLoadingButton");
+  const assets = [...new Set(RUNTIME_ASSETS)]; let complete = 0; let failed = 0; actions.hidden = true; retry.hidden = true; fill.style.width = "0%"; status.textContent = `灵息归位 0 / ${assets.length}`;
+  const report = (loaded) => { complete += 1; if (!loaded) failed += 1; fill.style.width = `${Math.round(complete / assets.length * 100)}%`; status.textContent = `灵息归位 ${complete} / ${assets.length}`; };
+  await Promise.all(assets.map((source) => preloadAsset(source, report)));
+  status.textContent = failed ? `${failed} 缕灵息未响应，仍可进入山门` : "灵息已齐备，山门开启";
+  retry.hidden = failed === 0; actions.hidden = false;
+}
+function enterGame() { document.querySelector("#loadingScreen").classList.add("is-hidden"); const shell = document.querySelector("#gameShell"); shell.classList.remove("is-loading"); shell.setAttribute("aria-hidden", "false"); }
 let audioContext;
 const SOUND_NOTES = { flip: [[440, 0]], match: [[523, 0], [659, .09]], miss: [[196, 0]], tool: [[587, 0], [784, .08]], unlock: [[392, 0], [523, .1]], teleport: [[349, 0], [698, .08]], win: [[523, 0], [659, .1], [784, .2]], fail: [[262, 0], [196, .12]] };
 function playPaperFlip(context) {
@@ -382,6 +408,8 @@ document.querySelector("#shareTrackerButton").addEventListener("click", shareFor
 document.querySelector("#catalogGrid").addEventListener("click", (event) => { const card = event.target.closest("[data-beast-id]"); if (card) openCatalogDetail(card.dataset.beastId); });
 document.querySelector("#catalogDetailClose").addEventListener("click", closeCatalogDetail);
 document.querySelector("#catalogDetailModal").addEventListener("click", (event) => { if (event.target.id === "catalogDetailModal") closeCatalogDetail(); });
+document.querySelector("#enterGameButton").addEventListener("click", enterGame);
+document.querySelector("#retryLoadingButton").addEventListener("click", preloadGameAssets);
 el.soundToggle.addEventListener("click", toggleSound); el.playSoundToggle.addEventListener("click", toggleSound);
 document.querySelector("#resetButton").addEventListener("click", () => { if (!window.confirm("确定重置等级、图鉴与教学关进度吗？")) return; state.progress = { xp: 0, completed: {}, tutorials: {}, discovered: {}, soundEnabled: state.progress.soundEnabled, lastRuns: {} }; saveProgress(); renderProfile(); renderSoundButtons(); });
-renderProfile(); renderSoundButtons();
+renderProfile(); renderSoundButtons(); preloadGameAssets();
