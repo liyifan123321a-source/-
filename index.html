@@ -42,8 +42,8 @@
           <button class="home-tile" id="weeklyButton" type="button">
             <span class="tile-symbol">☽</span><strong>每周挑战</strong><small id="weeklyLabel">本周迷阵</small>
           </button>
-          <button class="home-tile" type="button" disabled>
-            <span class="tile-symbol">✧</span><strong>灵兽图鉴</strong><small>敬请期待</small>
+          <button class="home-tile" id="catalogButton" type="button">
+            <span class="tile-symbol">✧</span><strong>灵兽图鉴</strong><small id="catalogProgress">0 / 18 已发现</small>
           </button>
         </section>
         <p class="streak-line" id="streakLine">完成教学关卡，可获得一次经验。</p>
@@ -57,6 +57,20 @@
         </header>
         <div class="page-intro"><p class="eyebrow">教学试炼</p><h2>循着灵息，依序深入山门</h2></div>
         <div class="level-list" id="levelList"></div>
+      </section>
+
+      <section class="screen catalog-screen" id="catalogScreen">
+        <header class="topbar compact-topbar">
+          <button class="back-button" id="catalogBackButton" type="button">← 返回</button>
+          <div class="brand">灵兽图鉴</div>
+          <div class="level-mini" id="catalogCount">0 / 18</div>
+        </header>
+        <section class="catalog-intro">
+          <p class="eyebrow">云隐山门 · 灵息录</p>
+          <h2>已寻得的灵兽</h2>
+          <p id="catalogHint">在试炼中首次消除灵兽，即可记录它的踪影。</p>
+        </section>
+        <section class="catalog-grid" id="catalogGrid" aria-label="灵兽图鉴列表"></section>
       </section>
 
       <section class="screen play-screen" id="playScreen">
@@ -97,6 +111,17 @@
         <div class="result-record" id="resultRecord" hidden></div>
         <div class="xp-gain" id="xpGain">首次通关经验 +0</div>
         <div class="modal-actions"><button class="secondary-button" id="replayButton" type="button">再来一局</button><button class="secondary-button" id="reviewButton" type="button">复盘本局</button><button class="primary-button" id="nextButton" type="button">下一关 <span>→</span></button></div>
+      </section>
+    </div>
+
+    <div class="modal-layer" id="catalogDetailModal" aria-hidden="true">
+      <section class="catalog-detail-modal" role="dialog" aria-modal="true" aria-labelledby="catalogDetailTitle">
+        <button class="catalog-close" id="catalogDetailClose" type="button" aria-label="关闭图鉴详情" title="关闭">×</button>
+        <img id="catalogDetailArt" src="" alt="">
+        <p class="eyebrow" id="catalogDetailKicker">灵息已现</p>
+        <h2 id="catalogDetailTitle"></h2>
+        <p id="catalogDetailLore"></p>
+        <p class="catalog-encounters" id="catalogDetailEncounters"></p>
       </section>
     </div>
     <script src="app.js"></script>

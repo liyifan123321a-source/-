@@ -21,6 +21,27 @@ const BEASTS = [
   { id: "dragon", name: "虬龙", icon: "🐉", asset: "assets/beast-dragon.jpg" }
 ];
 
+const BESTIARY_LORE = {
+  fox: "青狐善循山风，常以一缕淡香引人避开迷径。",
+  bird: "赤鸟掠过暮云，羽间留有如朱砂般温暖的微光。",
+  turtle: "玄龟背负旧纹，在静水深处守望来往的灵息。",
+  ape: "白猿栖于高崖，最能辨认松风里细微的回响。",
+  koi: "金鲤游过月池时，鳞片会映出一瞬流动的金色。",
+  deer: "灵鹿角上常有晨露，铃音一响便知山门无恙。",
+  cat: "月狸偏爱在月白石旁蜷尾，双眼能照见隐藏的足迹。",
+  crane: "云鹤振翅不惊雾，常把远处的灵讯带回山中。",
+  rabbit: "玉兔抱着月石而眠，耳尖一点朱砂从不褪色。",
+  butterfly: "梦蝶翅纹如云气舒展，掠过处总有短暂的安宁。",
+  moth: "月蛾翼粉似薄霜，安静停驻在古灯照不到的角落。",
+  owl: "夜枭守着子夜的山径，琥珀色眼睛从不遗漏来客。",
+  otter: "水獭把圆润玉石藏在掌中，随波浮沉却从不迷失。",
+  serpent: "青蛇盘作一线清环，耐心聆听石缝间的水声。",
+  goat: "云羊的卷角像云纹层叠，走过处草叶会沾上露光。",
+  horse: "天马踏云而行，蹄下三点金光是远行者的路标。",
+  dog: "灵犬嗅觉灵敏，常在主人未察觉前找到遗落的灵息。",
+  dragon: "虬龙尚未成年，却已懂得以短角守住一湾清泉。"
+};
+
 // 机关只写在关卡数据中；后续新增封印、巡游、五行等规则无需重写关卡流程。
 const LEVELS = [
   { id: 1, name: "初入山门", columns: 4, pairs: 8, moves: 18, xp: 40, chapter: "记忆教学", note: "连续翻开两张相同灵兽牌即可消除。" },
@@ -68,7 +89,7 @@ const el = {
   screens: document.querySelectorAll(".screen"), homeLevel: document.querySelector("#homeLevel"), homeXpFill: document.querySelector("#homeXpFill"), homeXpText: document.querySelector("#homeXpText"), currentStage: document.querySelector("#currentStage"), mainlineProgress: document.querySelector("#mainlineProgress"), streakLine: document.querySelector("#streakLine"), weeklyLabel: document.querySelector("#weeklyLabel"), levelMini: document.querySelector("#levelMini"), levelList: document.querySelector("#levelList"), playChapter: document.querySelector("#playChapter"), playName: document.querySelector("#playName"), movesValue: document.querySelector("#movesValue"), mistakesValue: document.querySelector("#mistakesValue"), objectiveText: document.querySelector("#objectiveText"), pairProgress: document.querySelector("#pairProgress"), mechanismNote: document.querySelector("#mechanismNote"), gameBoard: document.querySelector("#gameBoard"), mirrorTool: document.querySelector("#mirrorTool"), trackerTool: document.querySelector("#trackerTool"), breakerTool: document.querySelector("#breakerTool"), tutorialModal: document.querySelector("#tutorialModal"), tutorialKicker: document.querySelector("#tutorialKicker"), tutorialTitle: document.querySelector("#tutorialTitle"), tutorialDescription: document.querySelector("#tutorialDescription"), tutorialDemo: document.querySelector("#tutorialDemo"), tutorialStartButton: document.querySelector("#tutorialStartButton"), resultModal: document.querySelector("#resultModal"), resultKicker: document.querySelector("#resultKicker"), resultTitle: document.querySelector("#resultTitle"), resultDescription: document.querySelector("#resultDescription"), resultMoves: document.querySelector("#resultMoves"), resultMistakes: document.querySelector("#resultMistakes"), resultTools: document.querySelector("#resultTools"), resultStars: document.querySelector("#resultStars"), resultRecord: document.querySelector("#resultRecord"), xpGain: document.querySelector("#xpGain"), replayButton: document.querySelector("#replayButton"), reviewButton: document.querySelector("#reviewButton"), soundToggle: document.querySelector("#soundToggle"), playSoundToggle: document.querySelector("#playSoundToggle")
 };
 
-function loadProgress() { try { return { xp: 0, completed: {}, tutorials: {}, soundEnabled: true, lastRuns: {}, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") }; } catch { return { xp: 0, completed: {}, tutorials: {}, soundEnabled: true, lastRuns: {} }; } }
+function loadProgress() { try { return { xp: 0, completed: {}, tutorials: {}, discovered: {}, soundEnabled: true, lastRuns: {}, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") }; } catch { return { xp: 0, completed: {}, tutorials: {}, discovered: {}, soundEnabled: true, lastRuns: {} }; } }
 function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress)); }
 let audioContext;
 const SOUND_NOTES = { flip: [[440, 0]], match: [[523, 0], [659, .09]], miss: [[196, 0]], tool: [[587, 0], [784, .08]], unlock: [[392, 0], [523, .1]], teleport: [[349, 0], [698, .08]], win: [[523, 0], [659, .1], [784, .2]], fail: [[262, 0], [196, .12]] };
@@ -168,21 +189,41 @@ function validateGeneratedLevel(level) {
 function currentChallenge() { const seed = weekSeed(); const template = CHALLENGE_TEMPLATES[hashSeed(seed) % CHALLENGE_TEMPLATES.length]; return createGeneratedLevel(template, seed); }
 
 function renderProfile() {
-  const level = playerLevel(); const xp = xpInLevel(); const completed = LEVELS.filter((item) => state.progress.completed[item.id]).length;
+  const level = playerLevel(); const xp = xpInLevel(); const completed = LEVELS.filter((item) => state.progress.completed[item.id]).length; const discovered = discoveredCount();
   el.homeLevel.textContent = `Lv. ${level}`; el.levelMini.textContent = `Lv. ${level}`; el.homeXpFill.style.width = `${xp}%`; el.homeXpText.textContent = `${xp} / 100 XP`;
   el.mainlineProgress.textContent = `${completed} / ${LEVELS.length} 已通关`;
   const upcoming = nextLevel(); el.currentStage.textContent = upcoming ? `第 ${upcoming.id} 关 · ${upcoming.name}` : "主线完成 · 进入本周挑战";
   const challenge = currentChallenge(); el.weeklyLabel.textContent = `${challenge.name} · ${challenge.seed}`;
+  document.querySelector("#catalogProgress").textContent = `${discovered} / ${BEASTS.length} 已发现`;
   el.streakLine.textContent = completed === LEVELS.length ? "主线试炼已完成，每周挑战会产出新的可复盘迷阵。" : "教学关首次通关可获得一次经验。";
 }
 
 function renderLevels() {
   el.levelList.innerHTML = LEVELS.map((level) => {
     const complete = state.progress.completed[level.id]; const unlocked = level.id === 1 || Boolean(state.progress.completed[level.id - 1]);
-    const summary = level.mechanisms?.fog ? "迷雾机关 · 相邻消除" : level.mechanisms?.seal ? "封印机关 · 二次翻开" : level.mechanisms?.teleport ? "传送机关 · 固定换位" : level.mechanisms?.disguise ? "伪装机关 · 二次显真" : `${level.pairs} 对灵兽 · ${level.moves} 步`;
+    const summary = level.mechanisms?.fog ? "迷雾机关 · 成功配对" : level.mechanisms?.seal ? "封印机关 · 二次翻开" : level.mechanisms?.teleport ? "传送机关 · 固定换位" : level.mechanisms?.disguise ? "伪装机关 · 二次显真" : `${level.pairs} 对灵兽 · ${level.moves} 步`;
     return `<button class="level-card ${complete ? "is-complete" : ""}" data-level="${level.id}" type="button" ${unlocked ? "" : "disabled"}><span class="level-number">${complete ? "✓" : level.id}</span><span><strong>${level.name}</strong><small>${summary}</small></span><span class="level-stars">${complete ? stars(complete.stars) : unlocked ? "进入 →" : "未解锁"}</span></button>`;
   }).join("") + `<button class="level-card challenge-card" data-challenge="weekly" type="button"><span class="level-number">☽</span><span><strong>本周挑战</strong><small>${currentChallenge().name} · 固定种子</small></span><span class="level-stars">进入 →</span></button>`;
 }
+
+function discoveredCount() { return Object.keys(state.progress.discovered || {}).length; }
+function recordDiscovery(beastId) { const discovered = state.progress.discovered ||= {}; const firstDiscovery = !discovered[beastId]; discovered[beastId] = (discovered[beastId] || 0) + 1; saveProgress(); return firstDiscovery; }
+function renderCatalog() {
+  const discovered = state.progress.discovered || {}; const count = discoveredCount();
+  document.querySelector("#catalogCount").textContent = `${count} / ${BEASTS.length}`;
+  document.querySelector("#catalogHint").textContent = count === BEASTS.length ? "百兽灵息尽归山门。" : `再寻得 ${BEASTS.length - count} 种灵兽，即可补全灵息录。`;
+  document.querySelector("#catalogGrid").innerHTML = BEASTS.map((beast) => {
+    const encounters = discovered[beast.id] || 0; const found = encounters > 0;
+    return `<button class="catalog-card ${found ? "is-found" : "is-locked"}" type="button" data-beast-id="${beast.id}" ${found ? "" : "disabled"} aria-label="${found ? `查看${beast.name}图鉴` : "尚未发现的灵兽"}">${found ? `<img src="${beast.asset}" alt="${beast.name}" decoding="async"><span>${beast.name}</span><small>相遇 ${encounters} 次</small>` : `<i>✦</i><span>灵息未现</span><small>继续寻踪</small>`}</button>`;
+  }).join("");
+}
+function openCatalogDetail(beastId) {
+  const beast = BEASTS.find((item) => item.id === beastId); const encounters = state.progress.discovered?.[beastId] || 0; if (!beast || !encounters) return;
+  document.querySelector("#catalogDetailArt").src = beast.asset; document.querySelector("#catalogDetailArt").alt = beast.name;
+  document.querySelector("#catalogDetailTitle").textContent = beast.name; document.querySelector("#catalogDetailLore").textContent = BESTIARY_LORE[beast.id]; document.querySelector("#catalogDetailEncounters").textContent = `已相遇 ${encounters} 次`;
+  const modal = document.querySelector("#catalogDetailModal"); modal.classList.add("is-visible"); modal.setAttribute("aria-hidden", "false");
+}
+function closeCatalogDetail() { const modal = document.querySelector("#catalogDetailModal"); modal.classList.remove("is-visible"); modal.setAttribute("aria-hidden", "true"); }
 
 function startLevel(levelOrId, options = {}) {
   const source = typeof levelOrId === "object" ? levelOrId : LEVELS.find((item) => item.id === levelOrId); const template = source?.template || source; if (!template) return;
@@ -278,7 +319,11 @@ function resolvePair() {
   const [firstUid, secondUid] = state.open; const first = state.cards.find((card) => card?.uid === firstUid); const second = state.cards.find((card) => card?.uid === secondUid);
   const sealOpenedThisTurn = first.sealOpenedThisTurn || second.sealOpenedThisTurn; const disguiseOpenedThisTurn = first.disguiseOpenedThisTurn || second.disguiseOpenedThisTurn; const needsAnotherTurn = sealOpenedThisTurn || disguiseOpenedThisTurn;
   if (first.id === second.id && !needsAnotherTurn) {
-    first.matched = true; second.matched = true; state.matched += 1; playSound("match");
+    first.matched = true; second.matched = true; state.matched += 1; const firstDiscovery = recordDiscovery(first.id); playSound("match");
+    if (firstDiscovery) {
+      [first, second].forEach((card) => el.gameBoard.querySelector(`[data-index="${state.cards.indexOf(card)}"]`)?.classList.add("is-new-discovery"));
+      if (state.fogUnlocked) el.mechanismNote.textContent = `新灵兽归卷：${first.name} 已收录进图鉴。`;
+    }
     if (!state.fogUnlocked) { state.fogUnlocked = true; playSound("unlock"); el.mechanismNote.textContent = "灵兽灵息相合，迷雾已解除。"; }
     window.setTimeout(() => { state.open = []; state.locked = false; renderBoard(); renderHud(); if (state.matched === state.level.pairs) finishLevel(); else if (state.moves <= 0) finishLevel(true); }, 420);
   } else {
@@ -323,7 +368,9 @@ function shuffle(items) { const clone = [...items]; for (let i = clone.length - 
 document.querySelector("#continueButton").addEventListener("click", () => { const next = nextLevel(); if (next) startLevel(next); else startWeeklyChallenge(); });
 document.querySelector("#mainlineButton").addEventListener("click", () => { renderLevels(); showScreen("levelScreen"); });
 document.querySelector("#weeklyButton").addEventListener("click", startWeeklyChallenge);
+document.querySelector("#catalogButton").addEventListener("click", () => { renderCatalog(); showScreen("catalogScreen"); });
 document.querySelector("#levelBackButton").addEventListener("click", () => { renderProfile(); showScreen("homeScreen"); });
+document.querySelector("#catalogBackButton").addEventListener("click", () => { renderProfile(); showScreen("homeScreen"); });
 document.querySelector("#playBackButton").addEventListener("click", () => { hideTutorial(); state.locked = false; renderLevels(); showScreen("levelScreen"); });
 el.levelList.addEventListener("click", (event) => { const button = event.target.closest("[data-level], [data-challenge]"); if (!button || button.disabled) return; if (button.dataset.challenge) startWeeklyChallenge(); else startLevel(Number(button.dataset.level)); });
 el.replayButton.addEventListener("click", () => { el.resultModal.classList.remove("is-visible"); startLevel(state.level.template); });
@@ -332,6 +379,9 @@ document.querySelector("#nextButton").addEventListener("click", () => { el.resul
 el.tutorialStartButton.addEventListener("click", () => { const key = tutorialKeyFor(state.level); if (key) { state.progress.tutorials = { ...state.progress.tutorials, [key]: true }; saveProgress(); } hideTutorial(); state.locked = false; });
 el.mirrorTool.addEventListener("click", useMirror); el.trackerTool.addEventListener("click", useTracker); el.breakerTool.addEventListener("click", useBreaker);
 document.querySelector("#shareTrackerButton").addEventListener("click", shareForTracker);
+document.querySelector("#catalogGrid").addEventListener("click", (event) => { const card = event.target.closest("[data-beast-id]"); if (card) openCatalogDetail(card.dataset.beastId); });
+document.querySelector("#catalogDetailClose").addEventListener("click", closeCatalogDetail);
+document.querySelector("#catalogDetailModal").addEventListener("click", (event) => { if (event.target.id === "catalogDetailModal") closeCatalogDetail(); });
 el.soundToggle.addEventListener("click", toggleSound); el.playSoundToggle.addEventListener("click", toggleSound);
-document.querySelector("#resetButton").addEventListener("click", () => { if (!window.confirm("确定重置等级与教学关进度吗？")) return; state.progress = { xp: 0, completed: {}, tutorials: {}, soundEnabled: state.progress.soundEnabled, lastRuns: {} }; saveProgress(); renderProfile(); renderSoundButtons(); });
+document.querySelector("#resetButton").addEventListener("click", () => { if (!window.confirm("确定重置等级、图鉴与教学关进度吗？")) return; state.progress = { xp: 0, completed: {}, tutorials: {}, discovered: {}, soundEnabled: state.progress.soundEnabled, lastRuns: {} }; saveProgress(); renderProfile(); renderSoundButtons(); });
 renderProfile(); renderSoundButtons();
